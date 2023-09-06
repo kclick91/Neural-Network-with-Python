@@ -11,11 +11,24 @@ def sigmoid_derivative(x):
 # Generate some sample data
 X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 y = np.array([[0], [1], [1], [0]])
+print("Sample data.")
+print(X)
+print(y)
 
 # Initialize weights and biases for the neural network
-input_size = 2
-hidden_size = 4
-output_size = 1
+# Save
+# input_size = 2
+# hidden_size = 4
+# output_size = 1
+# End Save
+input_size = int(input("Enter the input size."))#Example is 2 so enter 2 for the example
+hidden_size = int(input("Enter the hidden size."))#Example is 4 so enter 4 for the example
+output_size = int(input("Enter the output size."))#Example is 1 so enter 1 for the example
+
+
+
+# Loop through input and output size user input
+
 
 np.random.seed(42)  # For reproducibility
 weights_input_hidden = np.random.uniform(size=(input_size, hidden_size))
@@ -23,8 +36,14 @@ bias_hidden = np.zeros((1, hidden_size))
 weights_hidden_output = np.random.uniform(size=(hidden_size, output_size))
 bias_output = np.zeros((1, output_size))
 
-learning_rate = 0.1
-epochs = 10000
+#Save
+# learning_rate = 0.1
+# epochs = 10000
+#End Save
+
+learning_rate = float(input("Enter the learning rate."))
+epochs = int(input("Enter the number of epochs."))
+
 
 # Training the neural network
 for epoch in range(epochs):
