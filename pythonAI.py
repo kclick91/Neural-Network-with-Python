@@ -9,11 +9,19 @@ def sigmoid_derivative(x):
     return x * (1 - x)
 
 # Generate some sample data
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([[0], [1], [1], [0]])
+# X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+# y = np.array([[0], [1], [1], [0]])
+
+# Sample data of number of hits for the mlb home team(0) and away team (1) and whether the home team(0) or away team(1) wins
+X = np.array ([[8, 8], [5, 2], [11, 10], [8, 6], [13, 6], [3, 12]])
+y = np.array([[0], [0], [0], [0], [0], [1]])
 print("Sample data.")
 print(X)
 print(y)
+
+
+#Test later
+Z = np.array([[8, 8], [1, 2], [1, 10], [1, 6], [13, 9], [2, 12]])
 
 # Initialize weights and biases for the neural network
 # Save
@@ -69,7 +77,8 @@ for epoch in range(epochs):
     bias_hidden += np.sum(d_hidden_layer, axis=0, keepdims=True) * learning_rate
 
 # Evaluate the trained model
-hidden_layer = sigmoid(np.dot(X, weights_input_hidden) + bias_hidden)
+# Z replacing X
+hidden_layer = sigmoid(np.dot(Z, weights_input_hidden) + bias_hidden)
 predicted_output = sigmoid(np.dot(hidden_layer, weights_hidden_output) + bias_output)
 
 print("Predicted Output:")
