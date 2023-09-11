@@ -44,12 +44,14 @@ output_size = int(input("Enter the output size."))#Example is 1 so enter 1 for t
 # Output size is 1, home team(0) or away team(1) wins
 
 # Games of 9/9/2023
-# Brewers v Yankees, Mets v Twins, Diamondbacks vs Cubs
+# Brewers v Yankees, Mets v Twins, Diamondbacks vs Cubs, Royals vs Blue Jays, Dodgers vs Nationals 
 # Score and inning without consideration of anything about the specific teams
 EARLIER_GAMES = np.array([[0,0,1], [0,0,2], [0,0,3], [2,2,4],[2,2,5],[2,2,6], [2,2,7], [5,2,8], [9,2,9], [2,0,1], [2,2,2], [2,3,3], [2,3,4], [2,3,5], [2,3,6], 
-[2,7,7], [4,8,8], [4,8,9], [0,0,1], [0,0,2], [0,1,3], [0,1,4],[1,1,5],[1,1,6],[1,1,7], [1,1,8], [1,1,9], [2,1,10]])
+[2,7,7], [4,8,8], [4,8,9], [0,0,1], [0,0,2], [0,1,3], [0,1,4],[1,1,5],[1,1,6],[1,1,7], [1,1,8], [1,1,9], [2,1,10], [0,0,1], [0,0,2], [0,0,3], [0,1,4], [1,3,5], 
+[1,4,6], [1,5,7], [1,5,8], [1,5,9], [1,1,1], [1,1,2], [1,1,3], [1,1,4], [1,3,5], [1,3,6], [2,5,7], [4,5,8],[5,5,9], [6,6,10], [6,7,11]])
 
-EARLIER_GAMES_RESULTS = np.array([[1],[1],[1],[1],[1],[1],[1],[1],[1],[0],[0],[0],[0],[0],[0],[0],[0],[0],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1]])
+EARLIER_GAMES_RESULTS = np.array([[1],[1],[1],[1],[1],[1],[1],[1],[1],[0],[0],[0],[0],[0],[0],[0],[0],[0],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],
+ [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]])
 
 
 
@@ -57,8 +59,8 @@ EARLIER_GAMES_RESULTS = np.array([[1],[1],[1],[1],[1],[1],[1],[1],[1],[0],[0],[0
 
 
 # TEST MLB game
-# 9/9/2023 Royals vs Blue Jays at end of 5th inning and end of 7th inning
-TEST_GAMES = [[1,3, 5], [1,5,7]]
+# 9/9/2023 Mariners vs Rays at end of 3rd inning, end of 5th ending and end of 8th inning
+TEST_GAMES = [[4,1,3], [4,3,5], [5,5,8]]
 
 
 # END TEST MLB game
