@@ -126,3 +126,14 @@ predicted_output = sigmoid(np.dot(hidden2_layer, weights_hidden2_output) + bias_
 
 print("Predicted Output:")
 print(predicted_output)
+
+for i in range(10):
+    print("Enter the away score, home score, and inning. 0 means home is predicted to win and 1 means away is predicted to win.")
+    away = int(input("Away."))
+    home = int(input("Home."))
+    inning = int(input("Inning."))
+    ARR = np.array([away, home, inning])
+    hidden1_layerEntered = sigmoid(np.dot(ARR, weights_input_hidden1) + bias_hidden1)
+    hidden2_layerEntered = sigmoid(np.dot(hidden1_layerEntered, weights_hidden1_hidden2) + bias_hidden2)
+    predicted_outputEntered = sigmoid(np.dot(hidden2_layerEntered, weights_hidden2_output) + bias_output)
+    print(predicted_outputEntered)
