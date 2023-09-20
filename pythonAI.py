@@ -96,9 +96,9 @@ epochs = 10000
 # print("Predicted Output:")
 # print(predicted_output)
 
-def EnterLearning():
-    learning_rate = float(input("Enter the learning rate."))
-    epochs = int(input("Enter the number of epochs."))
+
+learning_rate = float(input("Enter the learning rate."))
+epochs = int(input("Enter the number of epochs."))
 
 def train(EARLY, EARLYRESULTS, LATER):
     np.random.seed(42)  # For reproducibility
@@ -159,7 +159,6 @@ def MLBBoxScore():
         predicted_outputEntered = sigmoid(np.dot(hidden2_layerEntered, weights_hidden2_output) + bias_output)
         print(predicted_outputEntered)
       
-EnterLearning() 
 train(EARLIER_GAMES, EARLIER_GAMES_RESULTS, TEST_GAMES_TWO)
 MLBBoxScore()
 
