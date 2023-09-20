@@ -1,5 +1,7 @@
 import numpy as np
 
+
+
 # Define the sigmoid activation function
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -14,15 +16,19 @@ def sigmoid_derivative(x):
 
 # Initialize weights and biases for the neural network
 # Save
-# input_size = 2
-# hidden1_size = 4
-# hidden2_size = 4
-# output_size = 1
+# Default
+input_size = 2
+hidden1_size = 4
+hidden2_size = 4
+output_size = 1
 # End Save
+
 input_size = int(input("Enter the input size."))#Example is 2 so enter 2 for the example
 hidden1_size = int(input("Enter the first hidden size."))#Example is 4 so enter 4 for the example
 hidden2_size = int(input("Enter the second hidden size."))
 output_size = int(input("Enter the output size."))#Example is 1 so enter 1 for the example
+
+
 
 
 # What is the chance of each team winning based solely on the inning and score in that inning?
@@ -71,69 +77,91 @@ TEST_MADEUPGAMES = [[0,0,1],[0,0,2],[0,0,3], [0,0,4], [0,0,5], [0,0,6], [0,0,7],
 # Loop through input and output size user input
 
 
-np.random.seed(42)  # For reproducibility
-weights_input_hidden1 = np.random.uniform(size=(input_size, hidden1_size))
-bias_hidden1 = np.zeros((1, hidden1_size))
-weights_hidden1_hidden2 = np.random.uniform(size=(hidden1_size, hidden2_size))
-bias_hidden2 = np.zeros((1, hidden2_size))
-weights_hidden2_output = np.random.uniform(size=(hidden2_size, output_size))
-bias_output = np.zeros((1, output_size))
-
-
 #Save
 # learning_rate = 0.1
 # epochs = 10000
 #End Save
 
-learning_rate = float(input("Enter the learning rate."))
-epochs = int(input("Enter the number of epochs."))
 
+#DEFAULT
+learning_rate = 0.1
+epochs = 10000
 
-# Training the neural network
-for epoch in range(epochs):
-    # Forward propagation
-    hidden1_layer_input = np.dot(EARLIER_GAMES, weights_input_hidden1) + bias_hidden1
-    hidden1_layer_output = sigmoid(hidden1_layer_input)
-
-    hidden2_layer_input = np.dot(hidden1_layer_output, weights_hidden1_hidden2) + bias_hidden2
-    hidden2_layer_output = sigmoid(hidden2_layer_input)
-
-    output_layer_input = np.dot(hidden2_layer_output, weights_hidden2_output) + bias_output
-    output_layer_output = sigmoid(output_layer_input)
-
-    # Calculate the loss
-    loss = EARLIER_GAMES_RESULTS - output_layer_output
-
-    # Backpropagation
-    d_output = loss * sigmoid_derivative(output_layer_output)
-    error_hidden2_layer = d_output.dot(weights_hidden2_output.T)
-    d_hidden2_layer = error_hidden2_layer * sigmoid_derivative(hidden2_layer_output)
-    error_hidden1_layer = d_hidden2_layer.dot(weights_hidden1_hidden2.T)
-    d_hidden1_layer = error_hidden1_layer * sigmoid_derivative(hidden1_layer_output)
-
-    # Update weights and biases
-    weights_hidden2_output += hidden2_layer_output.T.dot(d_output) * learning_rate
-    bias_output += np.sum(d_output, axis=0, keepdims=True) * learning_rate
-    weights_hidden1_hidden2 += hidden1_layer_output.T.dot(d_hidden2_layer) * learning_rate
-    bias_hidden2 += np.sum(d_hidden2_layer, axis=0, keepdims=True) * learning_rate
-    weights_input_hidden1 += EARLIER_GAMES.T.dot(d_hidden1_layer) * learning_rate
-    bias_hidden1 += np.sum(d_hidden1_layer, axis=0, keepdims=True) * learning_rate
 
 # Evaluate the trained model
-hidden1_layer = sigmoid(np.dot(TEST_GAMES_TWO, weights_input_hidden1) + bias_hidden1)
-hidden2_layer = sigmoid(np.dot(hidden1_layer, weights_hidden1_hidden2) + bias_hidden2)
-predicted_output = sigmoid(np.dot(hidden2_layer, weights_hidden2_output) + bias_output)
+# hidden1_layer = sigmoid(np.dot(TEST_GAMES_TWO, weights_input_hidden1) + bias_hidden1)
+# hidden2_layer = sigmoid(np.dot(hidden1_layer, weights_hidden1_hidden2) + bias_hidden2)
+# predicted_output = sigmoid(np.dot(hidden2_layer, weights_hidden2_output) + bias_output)
 
-print("Predicted Output:")
-print(predicted_output)
+# print("Predicted Output:")
+# print(predicted_output)
 
-for i in range(10):
-    print("Enter the away score, home score, and inning. 0 means home is predicted to win and 1 means away is predicted to win.")
-    away = int(input("Away."))
-    home = int(input("Home."))
-    inning = int(input("Inning."))
-    ARR = np.array([away, home, inning])
-    hidden1_layerEntered = sigmoid(np.dot(ARR, weights_input_hidden1) + bias_hidden1)
-    hidden2_layerEntered = sigmoid(np.dot(hidden1_layerEntered, weights_hidden1_hidden2) + bias_hidden2)
-    predicted_outputEntered = sigmoid(np.dot(hidden2_layerEntered, weights_hidden2_output) + bias_output)
-    print(predicted_outputEntered)
+def EnterLearning():
+    learning_rate = float(input("Enter the learning rate."))
+    epochs = int(input("Enter the number of epochs."))
+
+def train(EARLY, EARLYRESULTS, LATER):
+    np.random.seed(42)  # For reproducibility
+    weights_input_hidden1 = np.random.uniform(size=(input_size, hidden1_size))
+    bias_hidden1 = np.zeros((1, hidden1_size))
+    weights_hidden1_hidden2 = np.random.uniform(size=(hidden1_size, hidden2_size))
+    bias_hidden2 = np.zeros((1, hidden2_size))
+    weights_hidden2_output = np.random.uniform(size=(hidden2_size, output_size))
+    bias_output = np.zeros((1, output_size))
+    for epoch in range(epochs):
+        # Forward propagation
+        hidden1_layer_input = np.dot(EARLY, weights_input_hidden1) + bias_hidden1
+        hidden1_layer_output = sigmoid(hidden1_layer_input)
+
+        hidden2_layer_input = np.dot(hidden1_layer_output, weights_hidden1_hidden2) + bias_hidden2
+        hidden2_layer_output = sigmoid(hidden2_layer_input)
+
+        output_layer_input = np.dot(hidden2_layer_output, weights_hidden2_output) + bias_output
+        output_layer_output = sigmoid(output_layer_input)
+
+        # Calculate the loss
+        loss = EARLYRESULTS - output_layer_output
+
+        # Backpropagation
+        d_output = loss * sigmoid_derivative(output_layer_output)
+        error_hidden2_layer = d_output.dot(weights_hidden2_output.T)
+        d_hidden2_layer = error_hidden2_layer * sigmoid_derivative(hidden2_layer_output)
+        error_hidden1_layer = d_hidden2_layer.dot(weights_hidden1_hidden2.T)
+        d_hidden1_layer = error_hidden1_layer * sigmoid_derivative(hidden1_layer_output)
+
+        # Update weights and biases
+        weights_hidden2_output += hidden2_layer_output.T.dot(d_output) * learning_rate
+        bias_output += np.sum(d_output, axis=0, keepdims=True) * learning_rate
+        weights_hidden1_hidden2 += hidden1_layer_output.T.dot(d_hidden2_layer) * learning_rate
+        bias_hidden2 += np.sum(d_hidden2_layer, axis=0, keepdims=True) * learning_rate
+        weights_input_hidden1 += EARLY.T.dot(d_hidden1_layer) * learning_rate
+        bias_hidden1 += np.sum(d_hidden1_layer, axis=0, keepdims=True) * learning_rate
+    
+    # Evaluate the trained model
+    hidden1_layer = sigmoid(np.dot(LATER, weights_input_hidden1) + bias_hidden1)
+    hidden2_layer = sigmoid(np.dot(hidden1_layer, weights_hidden1_hidden2) + bias_hidden2)
+    predicted_output = sigmoid(np.dot(hidden2_layer, weights_hidden2_output) + bias_output)
+    
+    print("Predicted Output:")
+    print(predicted_output)
+
+
+def MLBBoxScore():
+    
+    for i in range(10):
+        print("Enter the away score, home score, and inning. 0 means home is predicted to win and 1 means away is predicted to win.")
+        away = int(input("Away."))
+        home = int(input("Home."))
+        inning = int(input("Inning."))
+        ARR = np.array([away, home, inning])
+        hidden1_layerEntered = sigmoid(np.dot(ARR, weights_input_hidden1) + bias_hidden1)
+        hidden2_layerEntered = sigmoid(np.dot(hidden1_layerEntered, weights_hidden1_hidden2) + bias_hidden2)
+        predicted_outputEntered = sigmoid(np.dot(hidden2_layerEntered, weights_hidden2_output) + bias_output)
+        print(predicted_outputEntered)
+      
+EnterLearning() 
+train(EARLIER_GAMES, EARLIER_GAMES_RESULTS, TEST_GAMES_TWO)
+MLBBoxScore()
+
+
+
