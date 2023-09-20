@@ -162,10 +162,38 @@ def MLBBoxScore():
         hidden2_layerEntered = sigmoid(np.dot(hidden1_layerEntered, weights_hidden1_hidden2) + bias_hidden2)
         predicted_outputEntered = sigmoid(np.dot(hidden2_layerEntered, weights_hidden2_output) + bias_output)
         print(predicted_outputEntered)
+        resultFile = open("resFile.txt","a")
+        resultFile.write("Away Home Inning:  ")
+        resultFile.write(str(away))
+        resultFile.write("   ")
+        resultFile.write(str(home))
+        resultFile.write("   ")
+        resultFile.write(str(inning))
+        resultFile.write("   ")
+        
+        resultFile.write("Hidden Layer One Size:   ")
+        resultFile.write(str(globals()["hidden1_size"]))
+        resultFile.write("  ")
+        resultFile.write("Hidden Layer Two Size:   ")
+        resultFile.write(str(globals()["hidden2_size"]))
+        resultFile.write("  ")
+        resultFile.write("Learning Rate:   ")
+        resultFile.write(str(globals()["learning_rate"]))
+        resultFile.write("  ")
+        resultFile.write("Epochs:   ")
+        resultFile.write(str(globals()["epochs"]))
+        resultFile.write("  ")
+        resultFile.write("Prediction:   ")
+        resultFile.write(str(predicted_outputEntered))
+        resultFile.write("\n")
+        resultFile.close()
         
         
 train(EARLIER_GAMES, EARLIER_GAMES_RESULTS, TEST_GAMES_TWO)
 MLBBoxScore()
+
+# Provide a comparison of learning rate, epochs, and size of hidden layers
+
 
 
 

@@ -1,0 +1,7 @@
+Away Home Inning:  3   3   2   Hidden Layer One Size:   2  Hidden Layer Two Size:   2  Learning Rate:   0.1  Epochs:   10000  Prediction:   [[0.8758341]]
+Away Home Inning:  3   3   5   Hidden Layer One Size:   2  Hidden Layer Two Size:   2  Learning Rate:   0.1  Epochs:   10000  Prediction:   [[0.95156334]]
+Away Home Inning:  3   3   8   Hidden Layer One Size:   2  Hidden Layer Two Size:   2  Learning Rate:   0.1  Epochs:   10000  Prediction:   [[0.96309535]]
+Away Home Inning:  7   7   4   Hidden Layer One Size:   7  Hidden Layer Two Size:   7  Learning Rate:   0.1  Epochs:   10000  Prediction:   [[0.14792265]]
+Away Home Inning:  10   1   8   Hidden Layer One Size:   7  Hidden Layer Two Size:   7  Learning Rate:   0.1  Epochs:   10000  Prediction:   [[0.99989797]]
+Away Home Inning:  4   2   3   Hidden Layer One Size:   4  Hidden Layer Two Size:   2  Learning Rate:   0.3  Epochs:   10000  Prediction:   [[0.96059547]]
+Away Home Inning:  4   2   8   Hidden Layer One Size:   4  Hidden Layer Two Size:   2  Learning Rate:   0.3  Epochs:   10000  Prediction:   [[0.96059546]]
