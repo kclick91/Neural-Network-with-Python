@@ -18,16 +18,17 @@ def sigmoid_derivative(x):
 # Initialize weights and biases for the neural network
 # Save
 # Default
-input_size = 2
-hidden1_size = 4
-hidden2_size = 4
-output_size = 1
-# End Save
+# input_size = 2
+# hidden1_size = 4
+# hidden2_size = 4
+# output_size = 1
+# End Savehidd
 
-input_size = int(input("Enter the input size."))#Example is 2 so enter 2 for the example
-hidden1_size = int(input("Enter the first hidden size."))#Example is 4 so enter 4 for the example
+
+input_size = int(input("Enter the input size."))
+hidden1_size = int(input("Enter the first hidden size."))
 hidden2_size = int(input("Enter the second hidden size."))
-output_size = int(input("Enter the output size."))#Example is 1 so enter 1 for the example
+output_size = int(input("Enter the output size."))
 
 
 
@@ -117,8 +118,8 @@ epochs = 10000
 # print("Predicted Output:")
 # print(predicted_output)
 
-learning_rate = float(input("Enter the learning rate."))
-epochs = int(input("Enter the number of epochs."))
+# learning_rate = float(input("Enter the learning rate."))
+# epochs = int(input("Enter the number of epochs."))
 
 np.random.seed(42)  # For reproducibility
 weights_input_hidden1 = np.random.uniform(size=(input_size, hidden1_size))
@@ -128,6 +129,10 @@ bias_hidden2 = np.zeros((1, hidden2_size))
 weights_hidden2_output = np.random.uniform(size=(hidden2_size, output_size))
 bias_output = np.zeros((1, output_size))
 print("Weights: ", weights_input_hidden1)
+
+
+resultsArr = np.zeros(shape=(10,1))
+print("Results: " , resultsArr)
 def train(EARLY, EARLYRESULTS, LATER):
     
     for epoch in range(epochs):
@@ -166,8 +171,87 @@ def train(EARLY, EARLYRESULTS, LATER):
     print("Predicted Output:")
     print(predicted_output)
     
+def TrainSame(EARLY, EARLYRESULTS, home, away, inning, learning_rate, epochs):
+    for epoch in range(epochs):
+        # Forward propagation
+        hidden1_layer_input = np.dot(EARLY, globals()["weights_input_hidden1"]) + globals()["bias_hidden1"]
+        hidden1_layer_output = sigmoid(hidden1_layer_input)
+        hidden2_layer_input = np.dot(hidden1_layer_output, globals()["weights_hidden1_hidden2"]) + globals()["bias_hidden2"]
+
+        hidden2_layer_output = sigmoid(hidden2_layer_input)
+        output_layer_input = np.dot(hidden2_layer_output, globals()["weights_hidden2_output"]) + globals()["bias_output"]
+        output_layer_output = sigmoid(output_layer_input)
+
+        # Calculate the loss
+        loss = EARLYRESULTS - output_layer_output
+
+        # Backpropagation
+        d_output = loss * sigmoid_derivative(output_layer_output)
+        error_hidden2_layer = d_output.dot(globals()["weights_hidden2_output"].T)
+        d_hidden2_layer = error_hidden2_layer * sigmoid_derivative(hidden2_layer_output)
+        error_hidden1_layer = d_hidden2_layer.dot(globals()["weights_hidden1_hidden2"].T)
+        d_hidden1_layer = error_hidden1_layer * sigmoid_derivative(hidden1_layer_output)
+
+        # Update weights and biases
+        globals()["weights_hidden2_output"] += hidden2_layer_output.T.dot(d_output) * learning_rate
+        globals()["bias_output"] += np.sum(d_output, axis=0, keepdims=True) * learning_rate
+        globals()["weights_hidden1_hidden2"] += hidden1_layer_output.T.dot(d_hidden2_layer) * learning_rate
+        globals()["bias_hidden2"] += np.sum(d_hidden2_layer, axis=0, keepdims=True) * learning_rate
+        globals()["weights_input_hidden1"] += EARLY.T.dot(d_hidden1_layer) * learning_rate
+        globals()["bias_hidden1"] += np.sum(d_hidden1_layer, axis=0, keepdims=True) * learning_rate
+    
+    # Evaluate the trained model
+    LATER = [[away, home, inning]]
+    hidden1_layer = sigmoid(np.dot(LATER, globals()["weights_input_hidden1"]) + globals()["bias_hidden1"])
+    hidden2_layer = sigmoid(np.dot(hidden1_layer, globals()["weights_hidden1_hidden2"]) + globals()["bias_hidden2"])
+    predicted_output = sigmoid(np.dot(hidden2_layer, globals()["weights_hidden2_output"]) + globals()["bias_output"])
+    
+    print("Predicted Output:")
+    print(predicted_output)
+    return predicted_output
 
 
+def TrainSameColl(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp):
+    pointOne = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.1, 10000)
+    pointOneFive = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.15, 10000)
+    pointTwo = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.2, 10000)
+    pointTwoFive = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.25, 10000)
+    pointThree = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.3, 10000)
+    pointThreeFive = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.35, 10000)
+    pointFour = TrainSame(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp, 0.4, 10000)
+    collectionTrainSame = np.array([pointOne, pointOneFive, pointTwo, pointTwoFive, pointThree, pointThreeFive, pointFour])
+    
+    #print(collectionTrainSame)
+    
+    compareFile = open("CompareFile.txt","a")
+    for i in range(7):
+        compareFile.write("Away Home Inning:  ")
+        compareFile.write(str(awayScore))
+        compareFile.write("   ")
+        compareFile.write(str(homeScore))
+        compareFile.write("   ")
+        compareFile.write(str(inningInp))
+        compareFile.write("   ")
+        
+        compareFile.write("Hidden Layer One Size:   ")
+        compareFile.write(str(globals()["hidden1_size"]))
+        compareFile.write("  ")
+        compareFile.write("Hidden Layer Two Size:   ")
+        compareFile.write(str(globals()["hidden2_size"]))
+        compareFile.write("  ")
+        compareFile.write("Learning Rate:   ")
+        compareFile.write(str(0.1 + (0.05 * i)))
+        compareFile.write("  ")
+        compareFile.write("Epochs:   ")
+        compareFile.write(str(globals()["epochs"]))
+        compareFile.write("  ")
+        compareFile.write("\n")
+    compareFile.write("Prediction:   ")
+    compareFile.write("\n")
+    compareFile.write(str(collectionTrainSame))
+    compareFile.close()
+
+    return collectionTrainSame;
 def MLBBoxScore():
     
     for i in range(10):
@@ -207,12 +291,18 @@ def MLBBoxScore():
         resultFile.close()
         
         
-train(EARLIER_GAMES, EARLIER_GAMES_RESULTS, TEST_GAMES_TWO)
+# train(EARLIER_GAMES, EARLIER_GAMES_RESULTS, TEST_GAMES_TWO)
 
-MLBBoxScore()
+#MLB scores on 
+
+
+
+
+#MLBBoxScore()
 
 # Provide a comparison of learning rate, epochs, and size of hidden layers
+# Currently compares a learning rate of 0.1, 0.15, 0.2, 0.25
+TrainSameColl(EARLIER_GAMES, EARLIER_GAMES_RESULTS, 1,0,2)
 
 
-
-
+# New neural network with the array of comparisons as input
