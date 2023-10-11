@@ -79,6 +79,10 @@ EARLIER_GAMES_RESULTS = np.array([[1],[1],[1],[1],[1],[1],[1],[1],[1],[0],[0],[0
 
 # END PREDICTING HOME RUNS
 
+# 
+
+#
+
 
 
 
@@ -249,6 +253,7 @@ def TrainSameColl(EARLY, EARLYRESULTS, homeScore, awayScore, inningInp):
     compareFile.write("Prediction:   ")
     compareFile.write("\n")
     compareFile.write(str(collectionTrainSame))
+    compareFile.write("\n")
     compareFile.close()
 
     return collectionTrainSame;
@@ -303,6 +308,12 @@ def MLBBoxScore():
 # Provide a comparison of learning rate, epochs, and size of hidden layers
 # Currently compares a learning rate of 0.1, 0.15, 0.2, 0.25
 TrainSameColl(EARLIER_GAMES, EARLIER_GAMES_RESULTS, 1,0,2)
+
+TrainSameColl(EARLIER_GAMES, EARLIER_GAMES_RESULTS,1,1,3)
+
+TrainSameColl(EARLIER_GAMES, EARLIER_GAMES_RESULTS,6,1,3)
+
+TrainSameColl(EARLIER_GAMES,EARLIER_GAMES_RESULTS,6,1,4)
 
 
 # New neural network with the array of comparisons as input
